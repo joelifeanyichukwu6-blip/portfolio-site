@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D Concept Portfolio. 3D Modeling & Product Design</title>
+<meta name="description" content="Freelance 3D modeling, product design, architectural drafting and rendering.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+<script>
+  /* Apply saved theme before paint to avoid a flash. */
+  (function () {
+    try {
+      var t = localStorage.getItem('theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<style>
+:root {
+  --bg: #fafafa; --text: #111; --muted: #555; --card: #f0f0f0; --border: #ddd;
+  --btn-bg: #111; --btn-text: #fafafa;
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e0e0e; --text: #f2f2f2; --muted: #a0a0a0; --card: #1b1b1b; --border: #2e2e2e;
+    --btn-bg: #f2f2f2; --btn-text: #0e0e0e;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e0e0e; --text: #f2f2f2; --muted: #a0a0a0; --card: #1b1b1b; --border: #2e2e2e;
+  --btn-bg: #f2f2f2; --btn-text: #0e0e0e;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif; font-weight: 300; line-height: 1.6;
+  -webkit-font-smoothing: antialiased; transition: background .3s, color .3s;
+}
+img, video { max-width: 100%; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; border-radius: 4px; }
+.wrap { width: min(1280px, 100% - 48px); margin-inline: auto; }
+.display {
+  font-family: 'Playfair Display', Georgia, serif; font-weight: 900;
+  text-transform: uppercase; letter-spacing: -.035em; line-height: .92; margin: 0;
+}
+.eyebrow { font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 500; color: var(--muted); margin: 0 0 1rem; }
+.skip { position: absolute; left: -999px; top: 8px; background: var(--btn-bg); color: var(--btn-text); padding: 8px 14px; border-radius: 999px; z-index: 100; }
+.skip:focus { left: 12px; }
+
+/* NAV */
+header.nav { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+.logo { font-family: 'Playfair Display', serif; font-weight: 900; letter-spacing: -.02em; text-decoration: none; font-size: 1.15rem; text-transform: uppercase; }
+.nav ul { display: flex; align-items: center; gap: clamp(14px, 3vw, 36px); list-style: none; margin: 0; padding: 0; }
+.nav ul a { text-decoration: none; font-size: .9rem; font-weight: 400; color: var(--muted); transition: color .2s; }
+.nav ul a:hover { color: var(--text); }
+.theme-btn { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; display: grid; place-items: center; transition: background .2s, transform .3s var(--ease); }
+.theme-btn:hover { background: var(--card); transform: rotate(20deg); }
+.theme-btn svg { width: 18px; height: 18px; }
+
+/* HERO */
+.hero { padding: clamp(40px, 8vw, 96px) 0 clamp(40px, 6vw, 72px); }
+.hero h1 { font-size: clamp(2.2rem, 10vw, 9.5rem); }
+.hero h1 .line { display: flex; align-items: center; gap: .12em; flex-wrap: nowrap; white-space: nowrap; }
+.hero .disc { display: inline-block; height: .78em; aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: var(--card); flex: none; border: 1px solid var(--border); }
+.hero .disc img { width: 100%; height: 100%; object-fit: cover; }
+.hero-sub { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; margin-top: clamp(28px, 4vw, 56px); flex-wrap: wrap; }
+.hero-sub p { max-width: 34ch; font-size: clamp(1.05rem, 1.6vw, 1.3rem); margin: 0; }
+.ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.pill { display: inline-flex; align-items: center; gap: .4em; padding: 14px 26px; border-radius: 999px; font-weight: 500; font-size: .95rem; text-decoration: none; border: 1.5px solid var(--text); transition: transform .25s var(--ease), background .25s, color .25s; font-family: inherit; cursor: pointer; }
+.pill.fill { background: var(--btn-bg); color: var(--btn-text); }
+.pill.line { background: transparent; color: var(--text); }
+.pill:hover { transform: translateY(-2px); }
+.pill.line:hover { background: var(--text); color: var(--bg); }
+
+/* HERO VIDEO SLOT */
+.hero-video { margin-top: clamp(32px, 5vw, 64px); position: relative; aspect-ratio: 16/8; border-radius: 20px; overflow: hidden; background: var(--card); border: 1px solid var(--border); }
+.hero-video video { width: 100%; height: 100%; object-fit: cover; }
+
+/* SECTIONS */
+section { padding: clamp(56px, 9vw, 120px) 0; }
+.sec-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+.sec-head h2 { font-size: clamp(2.2rem, 6vw, 5rem); }
+
+/* WORK */
+.filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.filters button { font: inherit; font-size: .85rem; font-weight: 400; padding: 8px 18px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; transition: all .2s; }
+.filters button:hover { color: var(--text); border-color: var(--text); }
+.filters button[aria-pressed="true"] { background: var(--btn-bg); color: var(--btn-text); border-color: var(--btn-bg); }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+@media (max-width: 1000px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 700px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
+.card { position: relative; aspect-ratio: 1; border-radius: 14px; overflow: hidden; background: var(--card); border: 1px solid var(--border); padding: 0; font: inherit; color: inherit; text-align: left; display: block; width: 100%; }
+button.card { cursor: pointer; }
+.card img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease); }
+.card .overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 18px; color: #fff; background: linear-gradient(to top, rgba(0,0,0,.78), rgba(0,0,0,0) 60%); opacity: 0; transition: opacity .35s; }
+.card .overlay strong { font-family: 'Playfair Display', serif; font-weight: 900; text-transform: uppercase; letter-spacing: -.01em; font-size: 1.05rem; line-height: 1.1; }
+.card .overlay span { font-size: .78rem; opacity: .85; margin-top: 4px; }
+button.card:hover img, button.card:focus-visible img { transform: scale(1.07); }
+button.card:hover .overlay, button.card:focus-visible .overlay { opacity: 1; }
+.card.soon { display: flex; flex-direction: column; justify-content: space-between; padding: 16px; background: repeating-linear-gradient(135deg, var(--card), var(--card) 10px, color-mix(in srgb, var(--card) 92%, var(--text)) 10px, color-mix(in srgb, var(--card) 92%, var(--text)) 11px); }
+.card.soon .tag { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.card.soon .cs { font-size: .85rem; color: var(--muted); }
+.card.hide { display: none; }
+
+/* SERVICES */
+.cols { display: flex; gap: clamp(20px, 3vw, 48px); flex-wrap: wrap; }
+.cols > * { flex: 1 1 260px; }
+.service { border-top: 1px solid var(--text); padding-top: 20px; }
+.service .num { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1rem; color: var(--muted); }
+.service h3 { font-family: 'Playfair Display', serif; font-weight: 900; text-transform: uppercase; letter-spacing: -.02em; line-height: 1; font-size: clamp(1.5rem, 2.6vw, 2.1rem); margin: 14px 0; }
+.service p { color: var(--muted); margin: 0; }
+
+/* PROCESS */
+.steps { list-style: none; padding: 0; margin: 0; display: flex; gap: 16px; flex-wrap: wrap; counter-reset: s; }
+.steps li { flex: 1 1 220px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; counter-increment: s; }
+.steps li::before { content: counter(s, decimal-leading-zero); font-family: 'Playfair Display', serif; font-weight: 900; font-size: 2rem; display: block; margin-bottom: 8px; }
+.steps h3 { margin: 0 0 6px; font-weight: 500; font-size: 1.05rem; }
+.steps p { margin: 0; color: var(--muted); font-size: .95rem; }
+.files { margin-top: 28px; display: flex; gap: 10px 16px; align-items: center; flex-wrap: wrap; }
+.files strong { font-weight: 500; }
+.chip { border: 1px solid var(--border); border-radius: 999px; padding: 4px 14px; font-size: .85rem; color: var(--muted); }
+
+/* STATS */
+.stats { display: flex; flex-wrap: wrap; border-block: 1px solid var(--border); }
+.stat { flex: 1 1 240px; padding: 36px 24px; border-right: 1px solid var(--border); }
+.stat:last-child { border-right: 0; }
+.stat .n { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(2.6rem, 6vw, 4.5rem); line-height: 1; letter-spacing: -.03em; }
+.stat .l { color: var(--muted); font-size: .9rem; margin-top: 8px; }
+@media (max-width: 700px) { .stat { border-right: 0; border-bottom: 1px solid var(--border); } .stat:last-child { border-bottom: 0; } }
+
+/* CONTACT */
+.quote { background: var(--btn-bg); color: var(--btn-text); border-radius: 24px; padding: clamp(32px, 6vw, 80px); }
+.quote h2 { font-size: clamp(2.4rem, 7vw, 6rem); }
+.quote p { max-width: 46ch; margin: 24px 0 32px; opacity: .8; }
+.quote .pill { border-color: var(--btn-text); }
+.quote .pill.fill { background: var(--btn-text); color: var(--btn-bg); }
+.quote .pill.line { color: var(--btn-text); }
+.quote .pill.line:hover { background: var(--btn-text); color: var(--btn-bg); }
+.quote :focus-visible { outline-color: var(--btn-text); }
+
+footer { border-top: 1px solid var(--border); padding: 36px 0; }
+footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+footer ul { display: flex; gap: 24px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
+footer a { text-decoration: none; color: var(--muted); font-size: .9rem; }
+footer a:hover { color: var(--text); }
+footer small { color: var(--muted); width: 100%; }
+
+/* MODAL */
+dialog { border: 0; padding: 0; border-radius: 20px; width: min(960px, 94vw); max-height: 92vh; background: var(--bg); color: var(--text); overflow: auto; }
+dialog::backdrop { background: rgba(0,0,0,.7); backdrop-filter: blur(4px); }
+.m-body { padding: clamp(20px, 3vw, 36px); }
+.m-imgs { display: flex; flex-direction: column; gap: 12px; }
+.m-imgs img { width: 100%; border-radius: 12px; background: var(--card); }
+.m-body h3 { font-size: clamp(1.8rem, 4vw, 3rem); margin: 24px 0 6px; }
+.m-body .cat { color: var(--muted); font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; }
+.m-body p { color: var(--muted); max-width: 62ch; }
+.m-close { position: absolute; top: 14px; right: 14px; z-index: 2; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 1.2rem; cursor: pointer; }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .001ms !important; animation: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#work">Skip to work</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Home"><span data-brand>3D Concept Portfolio</span>.</a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li>
+          <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle dark mode">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <h1 class="display" aria-label="3D Modeling and Product Design">
+        <span class="line" aria-hidden="true">3D MODELING</span>
+        <span class="line" aria-hidden="true">
+          <span>&amp;</span>
+          <span class="disc"><img src="lamp_studio.png" alt="" width="400" height="400"></span>
+          <span>PRODUCT</span>
+        </span>
+        <span class="line" aria-hidden="true">DESIGN</span>
+      </h1>
+      <div class="hero-sub">
+        <p>I turn sketches, ideas and floor plans into clean 3D models, technical drawings and photorealistic renders.</p>
+        <div class="ctas">
+          <a class="pill fill" href="#work">See the work &rarr;</a>
+          <a class="pill line" href="#contact">Request a quote &rarr;</a>
+        </div>
+      </div>
+
+      <!--
+        HERO VIDEO SLOT
+        To add your video: export an MP4 (H.264, ~1920x960 or any 2:1 ratio, muted, under ~10 MB)
+        and save it as  hero.mp4  next to index.html. Nothing else to change.
+        Until the file exists, the poster image (the lamp render) is shown instead.
+        To change the slot's shape, edit .hero-video { aspect-ratio } in the CSS.
+      -->
+      <div class="hero-video reveal">
+        <video autoplay muted loop playsinline preload="metadata" poster="lamp_studio.png" aria-label="Showreel of recent 3D work">
+          <source src="hero.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow">Projects</p>
+          <h2 class="display">Selected Work</h2>
+        </div>
+        <div class="filters" id="filters" role="group" aria-label="Filter projects by category"></div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="sec-head reveal"><div><p class="eyebrow">What I do</p><h2 class="display">Services</h2></div></div>
+      <div class="cols">
+        <article class="service reveal"><span class="num">01</span><h3>Product Design &amp; 3D Modeling</h3><p>Concept to manufacturable model: parametric parts, assemblies and exploded views, prepared for 3D printing or production hand-off.</p></article>
+        <article class="service reveal"><span class="num">02</span><h3>Architectural Drafting &amp; Visualization</h3><p>Floor plans, elevations and sections drawn from your sketches or surveys, plus 3D massing and interior visuals.</p></article>
+        <article class="service reveal"><span class="num">03</span><h3>Rendering &amp; Animation</h3><p>Photorealistic stills and turntable animations that show a product or space clearly before anything is built.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head reveal"><div><p class="eyebrow">How it works</p><h2 class="display">Process</h2></div></div>
+      <ol class="steps">
+        <li class="reveal"><h3>Brief</h3><p>You share sketches, dimensions or references. We agree scope, files and timeline.</p></li>
+        <li class="reveal"><h3>Concepts</h3><p>I block out the design and send early views so direction is settled quickly.</p></li>
+        <li class="reveal"><h3>Refine</h3><p>Detailing and revisions based on your feedback until it is right.</p></li>
+        <li class="reveal"><h3>Deliver</h3><p>Final files and renders, organised and ready to use.</p></li>
+      </ol>
+      <div class="files reveal">
+        <strong>Files I deliver:</strong>
+        <span class="chip">STEP</span><span class="chip">STL</span><span class="chip">DWG/DXF</span><span class="chip">OBJ/FBX</span><span class="chip">PDF drawings</span><span class="chip">PNG/JPG renders</span><span class="chip">MP4 turntables</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="stats reveal" id="stats"></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="quote reveal">
+        <p class="eyebrow" style="color:inherit;opacity:.7">Contact</p>
+        <h2 class="display">Request<br>a quote</h2>
+        <p>Tell me what you need modeled, drawn or rendered, and attach any sketches or dimensions. I will reply with scope and a price.</p>
+        <div class="ctas">
+          <!-- TODO: set your email once, in the EMAIL constant in the script at the bottom of this file -->
+          <a class="pill fill" id="hireLink" href="#">Hire me on Cad Crowd &rarr;</a>
+          <!-- TODO: replace href="#" with your Cad Crowd profile URL -->
+          <a class="pill line" id="ccLink" href="#" data-todo="cadcrowd">Find me on Cad Crowd &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#top"><span data-brand>3D Concept Portfolio</span>.</a>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <small>&copy; <span id="year"></span> <span data-brand>3D Concept Portfolio</span>. All rights reserved.</small>
+  </div>
+</footer>
+
+<dialog id="modal" aria-labelledby="mTitle">
+  <button class="m-close" id="mClose" type="button" aria-label="Close">&times;</button>
+  <div class="m-body">
+    <div class="m-imgs" id="mImgs"></div>
+    <h3 class="display" id="mTitle"></h3>
+    <div class="cat" id="mCat"></div>
+    <p id="mDesc"></p>
+  </div>
+</dialog>
+
+<script>
+/* ============ EDIT HERE ============ */
+const BRAND = '3D Concept Portfolio';          // brand name, used everywhere via [data-brand]
+const EMAIL = 'hello@example.com';    // contact email, used by the mailto link
+const CAD_CROWD_URL = 'https://www.cadcrowd.com/profile/284854-joeli1';            // TODO: your Cad Crowd profile URL
+
+const CATEGORIES = ['Product Design', 'Architecture', '3D Printing', 'Rendering'];
+const TOTAL_SLOTS = 20;
+
+/* ADD A PROJECT = add one line below (it replaces one "Coming soon" slot).
+   images: first one is the card cover; extra images appear in the lightbox
+   (missing image files are hidden automatically). */
+const PROJECTS = [
+  { title: 'Walnut & Steel Desk Lamp', category: 'Product Design', images: ['lamp_studio.png', 'lamp_exploded.png'], description: 'A desk lamp concept in walnut and brushed steel, modeled and rendered in a studio setup. The exploded view shows how the parts fit together.' },
+  { title: 'Walnut & Fabric Smart Speaker', category: 'Product Design', images: ['speaker_studio.png', 'speaker_exploded.png'], description: 'A tapered smart speaker concept in walnut, woven fabric and brushed steel, with a steel touch disc and a soft status light.' },
+  { title: 'Modern Timber Cabin', category: 'Architecture', images: ['cabin_final.png', 'cabin_drawings.png'], description: 'A small timber cabin concept with a glazed front, deck and flue. Includes a 1:50 plan and elevations sheet. Self-initiated concept, not for construction.' },
+  { title: 'Scandinavian Living Room', category: 'Architecture', images: ['living_room.png'], description: 'A calm living room interior concept: sofa, walnut coffee table, floor lamp, shelf and plant, lit by a large window. Modeled and rendered in Blender.' },
+  { title: 'Ceramic & Walnut Pour-Over Set', category: 'Product Design', images: ['pourover.png'], description: 'A pour-over coffee set concept: smoked ceramic carafe, white ceramic dripper, walnut collar and coaster, steel accents.' },
+  { title: 'Printable Phone Stand', category: '3D Printing', images: ['phone_stand.png'], description: 'A simple desk phone stand designed for FDM 3D printing: flat base, angled back rest, front lip and side ribs, no supports needed. Concept model, print not yet tested.' },
+  { title: 'Studio Apartment Layout', category: 'Architecture', images: ['apartment.png', 'apartment_plan.png'], description: 'A 35 m2 open-plan studio apartment: sleeping area, living and dining, kitchen run and a separate bathroom. Cutaway 3D view and a 1:50 floor plan. Self-initiated concept, not for construction.' },
+  { title: 'Compact Bathroom Design: Plan, Elevations and 3D', category: 'Architecture', images: ['bathroom.png', 'bathroom_drawings.png'], description: 'A compact 2.6 x 3.2 m bathroom: bathtub, walk-in shower with glass screen, walnut vanity and WC. Cutaway 3D view plus a 1:25 plan and two elevations with dimensions. Self-initiated concept, not for construction.' },
+  { title: 'Modern White Villa with Courtyard Pool: Exterior Render, Site Plan and Elevations', category: 'Architecture', images: ['villa.png', 'villa_drawings.png'], description: 'A two-volume minimalist white villa with floor-to-ceiling glazing, a timber deck and a courtyard pool. Exterior render plus a 1:100 site plan and two dimensioned elevations. Self-initiated concept, not for construction.' },
+  { title: 'Two-Storey Modern Residence: Floor Plans, Elevations and 3D Exterior Render', category: 'Architecture', images: ['residence.png', 'residence_drawings.png'], description: 'A four-bedroom family house with an attached garage, brick ground floor, timber-clad upper floor and a gable roof. Exterior render plus 1:100 ground and first floor plans and two dimensioned elevations. Self-initiated concept, not for construction.' },
+  { title: 'Modular Vertical Housing: 3D Massing Model, Render and Module Diagrams', category: 'Architecture', images: ['modular.png', 'modular_drawings.png'], description: 'A seven-storey stacked-module housing concept: 26 modules of 3.6 x 8.0 x 3.0 m with a glazed ground floor, offset modules that form terraces, and a rear service core. Render, STL massing model and a dimensioned front elevation and module diagram. Self-initiated concept, not for construction.' },
+  { title: 'Corner Shop Exterior Renovation: Before and After 3D Renders and Elevations', category: 'Rendering', images: ['shop_after.png', 'shop_before_after.png', 'shop_drawings.png'], description: 'A two-storey shop frontage redesigned: roller shutter and small window replaced by a full-height glazed shopfront, timber fascia with illuminated sign, awning, planters and a repaint. Before and after renders plus 1:75 existing and proposed elevations. Self-initiated concept, not for construction.' },
+  { title: 'Compact Kitchen Design: Plan, Elevations and 3D Cutaway', category: 'Architecture', images: ['kitchen.png', 'kitchen_drawings.png'], description: 'A 4.0 x 3.2 m kitchen with an L-shaped worktop run, island with two stools, wall units and a window. Cutaway 3D view plus a 1:30 plan and two dimensioned elevations. Self-initiated concept, not for construction.' },
+  { title: 'Wireless Earbuds and Charging Case: 3D Product Concept, Exploded View and STL', category: 'Product Design', images: ['earbuds.png', 'earbuds_exploded.png'], description: 'A concept for a pair of wireless earbuds and a pebble-style charging case with a walnut lid disc and status light. Studio render and an exploded view showing lid, tray, hinge and earbuds. Concept model only.' },
+  { title: 'Printable Desk Organiser: Tray and Pen Cup, 3D Printing Concept and STL', category: '3D Printing', images: ['organiser.png'], description: 'A desk organiser with three compartments and a separate pen cup, designed for FDM printing without supports. Concept model, not print-tested.' },
+  { title: 'Stackable Ceramic Mug Set on Walnut Tray: 3D Product Concept', category: 'Product Design', images: ['mugs.png'], description: 'A set of three tapered ceramic mugs in cream, terracotta and charcoal with a walnut serving tray. Studio render and STL for visualisation.' },
+  { title: 'Modular Hex Wall Planter: 3D Printing Concept and STL', category: '3D Printing', images: ['planter.png'], description: 'Hexagonal planter modules that tile into a honeycomb on a wall, designed for FDM printing. Concept model, not print-tested.' },
+  { title: 'Cable and Charger Organiser: 3D Printing Concept and STL', category: '3D Printing', images: ['cable.png'], description: 'A weighted desk block with three open channels that hold charging cables in place. Designed for FDM printing. Concept model, not print-tested.' },
+  { title: 'Product Packshot Reel: Lamp, Speaker and Pour-Over Studio Renders and Turntables', category: 'Rendering', images: ['packshot_speaker.png', 'packshot_pourover.png'], description: 'Studio packshots of three of the product concepts: two turntables and four close-up stills in a dark studio set. The reel video plays at the top of this page.' },
+  { title: 'Timber Cabin Day to Dusk: Exterior 3D Renders', category: 'Rendering', images: ['cabin_dusk.png', 'cabin_day.png'], description: 'The same cabin concept rendered in daylight and at dusk with warm interior light. Self-initiated concept, not for construction.' },
+];
+/* =================================== */
+
+document.querySelectorAll('[data-brand]').forEach(el => el.textContent = BRAND);
+document.title = BRAND + '. 3D Modeling & Product Design';
+document.getElementById('hireLink').href = CAD_CROWD_URL;
+document.getElementById('ccLink').href = CAD_CROWD_URL;
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* Theme */
+const root = document.documentElement;
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const current = root.getAttribute('data-theme') ||
+    (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const next = current === 'dark' ? 'light' : 'dark';
+  root.setAttribute('data-theme', next);
+  try { localStorage.setItem('theme', next); } catch (e) {}
+});
+
+/* Grid */
+const grid = document.getElementById('grid');
+const filtersEl = document.getElementById('filters');
+let active = 'All';
+
+function el(tag, cls, text) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text != null) n.textContent = text;
+  return n;
+}
+
+function buildGrid() {
+  grid.innerHTML = '';
+  PROJECTS.forEach((p, i) => {
+    const b = el('button', 'card reveal');
+    b.type = 'button';
+    b.dataset.cat = p.category;
+    b.setAttribute('aria-label', 'Open project: ' + p.title);
+    const img = el('img');
+    img.src = p.images[0]; img.alt = p.title + ' render'; img.loading = 'lazy';
+    img.addEventListener('error', () => img.remove());
+    const ov = el('div', 'overlay');
+    ov.append(el('strong', null, p.title), el('span', null, p.category));
+    b.append(img, ov);
+    b.addEventListener('click', () => openModal(i));
+    grid.append(b);
+  });
+  for (let i = PROJECTS.length; i < TOTAL_SLOTS; i++) {
+    const cat = CATEGORIES[(i - PROJECTS.length) % CATEGORIES.length];
+    const d = el('div', 'card soon reveal');
+    d.dataset.cat = cat;
+    d.append(el('span', 'tag', cat), el('span', 'cs', 'Coming soon'));
+    grid.append(d);
+  }
+}
+
+function buildFilters() {
+  ['All', ...CATEGORIES].forEach(c => {
+    const b = el('button', null, c);
+    b.type = 'button';
+    b.setAttribute('aria-pressed', c === 'All');
+    b.addEventListener('click', () => {
+      active = c;
+      filtersEl.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+      grid.querySelectorAll('.card').forEach(card => {
+        card.classList.toggle('hide', c !== 'All' && card.dataset.cat !== c);
+      });
+    });
+    filtersEl.append(b);
+  });
+}
+
+/* Modal */
+const modal = document.getElementById('modal');
+function openModal(i) {
+  const p = PROJECTS[i];
+  const box = document.getElementById('mImgs');
+  box.innerHTML = '';
+  p.images.forEach((src, k) => {
+    const im = el('img');
+    im.alt = p.title + (k === 0 ? ' hero render' : ' view ' + (k + 1));
+    im.addEventListener('error', () => im.remove()); /* optional images never show broken */
+    im.src = src;
+    box.append(im);
+  });
+  document.getElementById('mTitle').textContent = p.title;
+  document.getElementById('mCat').textContent = p.category;
+  document.getElementById('mDesc').textContent = p.description;
+  if (typeof modal.showModal === 'function') modal.showModal(); else modal.setAttribute('open', '');
+}
+document.getElementById('mClose').addEventListener('click', () => modal.close());
+modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });
+
+/* Stats: all derived, nothing invented */
+const stats = [
+  [PROJECTS.length, 'finished project' + (PROJECTS.length === 1 ? '' : 's')],
+  ['5', 'CAD tools: SolidWorks, Fusion 360, AutoCAD, SketchUp, Blender'],
+  [String(TOTAL_SLOTS), 'piece portfolio in progress'],
+];
+const statsEl = document.getElementById('stats');
+stats.forEach(([n, l]) => {
+  const s = el('div', 'stat');
+  s.append(el('div', 'n', String(n)), el('div', 'l', l));
+  statsEl.append(s);
+});
+
+buildGrid();
+buildFilters();
+
+/* Scroll reveal */
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: .12 }) : null;
+document.querySelectorAll('.reveal').forEach(n => io ? io.observe(n) : n.classList.add('in'));
+</script>
+</body>
+</html>
