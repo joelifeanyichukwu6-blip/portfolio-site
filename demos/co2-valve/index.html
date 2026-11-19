@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CO2 Carbonation Valve: working concept demo | 3D Concept Portfolio</title>
+<meta name="description" content="Interactive concept study of a bottom-mounted CO2 carbonation valve and threaded adapter ring: live section view, simulated dosing, hand calculations, renders and STL. Self-initiated concept, not pressure-tested.">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+:root{--bg:#0e0f12;--panel:#17181d;--line:#2a2c34;--tx:#e9e7e2;--mut:#9a9aa3;--acc:#d9a35b;--cold:#5bb4e8;--bad:#e8665b;--ok:#6cc58b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 -apple-system,Segoe UI,Helvetica,Arial,sans-serif}
+a{color:var(--acc)}header,main,footer{max-width:1180px;margin:0 auto;padding:0 20px}
+header{padding-top:22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+h1{font:800 28px/1.2 Georgia,serif;margin:18px 0 6px}h2{font:700 20px Georgia,serif;margin:34px 0 10px}
+.sub{color:var(--mut);max-width:820px}
+.warn{background:#2a2113;border:1px solid #6b5426;color:#f0d9a8;border-radius:10px;padding:12px 14px;margin:16px 0;font-size:14px}
+.grid{display:grid;grid-template-columns:minmax(300px,1fr) 380px;gap:18px;align-items:start}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+#sv{width:100%;height:auto;background:#101116;border-radius:8px;display:block}
+.ctl label{display:block;font-size:13px;color:var(--mut);margin:12px 0 4px}.ctl input[type=range]{width:100%}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+button{background:#23252d;color:var(--tx);border:1px solid #3a3d48;border-radius:8px;padding:9px 12px;font:600 14px inherit;cursor:pointer}
+button.go{background:var(--acc);color:#1b1408;border-color:var(--acc)}button:hover{filter:brightness(1.12)}
+.ro{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.ro div{background:#101116;border-radius:8px;padding:8px 10px}
+.ro b{display:block;font-size:20px}.ro span{font-size:12px;color:var(--mut)}
+.st-ok{color:var(--ok)}.st-bad{color:var(--bad)}
+canvas{width:100%;height:150px;background:#101116;border-radius:8px;margin-top:12px}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}th{color:var(--mut);font-weight:600}
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}.gal img,.gal video{width:100%;border-radius:10px;border:1px solid var(--line);background:#000}
+.gal figcaption{font-size:13px;color:var(--mut);margin-top:6px}figure{margin:0}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:2px 10px;font-size:12px;color:var(--mut);margin:2px 4px 2px 0}
+.calc input{width:80px;background:#101116;color:var(--tx);border:1px solid #3a3d48;border-radius:6px;padding:4px 6px}
+ul.tight li{margin:4px 0}
+footer{padding:30px 20px 50px;color:var(--mut);font-size:13px}
+</style>
+</head>
+<body>
+<header><a href="/">&larr; 3D Concept Portfolio</a><span class="tag">Self-initiated concept study</span></header>
+<main>
+<h1>Portable CO<sub>2</sub> Carbonation Valve: working concept demo</h1>
+<p class="sub">A bottom-mounted CO<sub>2</sub> injection valve and threaded adapter ring that mates with an off-the-shelf wide-mouth bottle. Below: a live section view you can operate, a simple simulated dose, hand calculations, renders, a printable STL and a dimensioned sheet.</p>
+<div class="warn"><b>Please read:</b> this is a concept study I built on my own initiative from the public job brief. It is a Blender mesh model plus an illustrative simulation. It is <b>not</b> parametric SolidWorks/Fusion CAD, has <b>not</b> been pressure-tested, has <b>no FEA</b>, and is <b>not certified or safe to build as-is</b>. Part dimensions, thread engagement, spring rates and the bottle mouth are my assumptions. The simulation is a toy model to show intent, not a prediction.</div>
+
+<div class="grid">
+ <div class="card">
+  <svg id="sv" viewBox="-52 -92 104 160" xmlns="http://www.w3.org/2000/svg" aria-label="Animated cross-section of the valve assembly"></svg>
+ </div>
+ <div class="card ctl">
+  <b>Operate it</b>
+  <label>1. Screw the 16 g cartridge in: <span id="lblS">0%</span> (pin pierces the seal at about 95%)</label>
+  <input id="sl" type="range" min="0" max="100" value="0">
+  <label>Water in the bottle: <span id="lblW">500</span> mL (750 mL bottle)</label>
+  <input id="wv" type="range" min="200" max="700" step="25" value="500">
+  <label>Operator stops the dose at: <span id="lblT">75</span> psi (set 100+ to watch the relief valve act)</label>
+  <input id="tp" type="range" min="40" max="130" step="5" value="75">
+  <div class="row"><button class="go" id="bGo">2. Start dose</button><button id="bStop">Back cartridge out (stop)</button><button id="bReset">Reset</button></div>
+  <div class="ro">
+   <div><b id="oP">0 psi</b><span>Bottle pressure (gauge)</span></div>
+   <div><b id="oC">&ndash;</b><span>Cartridge pressure</span></div>
+   <div><b id="oG">16.0 g</b><span>CO<sub>2</sub> left in cartridge</span></div>
+   <div><b id="oT">20 &deg;C</b><span>Expansion chamber (illustrative)</span></div>
+   <div><b id="oK">closed</b><span>Check valve</span></div>
+   <div><b id="oR">closed</b><span>Relief valve (set ~100 psi)</span></div>
+   <div><b id="oV">0.0</b><span>Dissolved, volumes of CO<sub>2</sub></span></div>
+   <div><b id="oSF">&ndash;</b><span>Chamber wall margin at this pressure</span></div>
+  </div>
+  <canvas id="ch" width="700" height="300"></canvas>
+  <div style="font-size:12px;color:var(--mut);margin-top:6px">Green band = 60&ndash;90 psi working range from the brief. Red line = relief setting.</div>
+ </div>
+</div>
+
+<h2>What the demo is showing</h2>
+<ul class="tight">
+<li><b>Port:</b> 3/8"-24 UNF female port, 8.5 mm pilot, 45&deg; lead-in chamfer, FKM O-ring face seal at the shoulder. A fixed hollow pierce pin (316L) opens the cartridge seal as it is screwed in.</li>
+<li><b>Joule-Thomson management:</b> the pin leads to a 1.0 mm brass-ready orifice jet, then a 14 mm expansion chamber, so the large pressure drop happens in a known volume with 18 mm of 316L around it (not in the bottle wall).</li>
+<li><b>Check valve:</b> a brass ball poppet on a spring stops water and pressure flowing back into the cartridge port; a perforated 316L diffuser breaks the gas into small bubbles.</li>
+<li><b>Relief:</b> a radial ball-and-spring relief with a threaded brass plug (set to roughly 100 psi in this concept).</li>
+<li><b>Adapter ring:</b> a 316L collar whose bore is meant to thread onto a wide-mouth bottle neck (thread form and pitch to be confirmed against the actual bottle), clamping the valve flange against an FKM face seal.</li>
+</ul>
+<div class="warn"><b>Open engineering question I found while building it:</b> a 16 g cartridge holds far more CO<sub>2</sub> than 500 mL of water in a 750 mL bottle can take at 60&ndash;90 psi. Set the stop pressure above ~100 psi and the simulation shows the relief venting. The concept therefore needs a charge limiter (metering, a regulator, or a dose-by-turns stop). I have not designed that part yet; it should be decided together with your feasibility study.</div>
+
+<h2>Hand calculation (thick-wall cylinder, not FEA)</h2>
+<div class="card calc">
+ <p style="margin-top:0">Lam&eacute; hoop stress at the bore of a thick cylinder: &sigma; = P (r<sub>o</sub>&sup2;+r<sub>i</sub>&sup2;) / (r<sub>o</sub>&sup2;&minus;r<sub>i</sub>&sup2;). 316L annealed minimum yield taken as 170 MPa (confirm against the mill cert). Edit the numbers:</p>
+ Pressure <input id="cP" type="number" value="6.2" step="0.1"> bar &nbsp; r<sub>i</sub> <input id="cRi" type="number" value="7" step="0.5"> mm &nbsp; r<sub>o</sub> <input id="cRo" type="number" value="25" step="0.5"> mm &nbsp; yield <input id="cY" type="number" value="170"> MPa
+ <p id="cOut" style="margin-bottom:0"></p>
+ <p style="font-size:13px;color:var(--mut);margin-bottom:0">Default = expansion chamber at the top of the working range. Try 57 bar to see the worst case at the cartridge side (CO<sub>2</sub> vapour pressure near 20 &deg;C). This only checks one wall in one load case: no threads, no stress concentrations, no fatigue, no temperature effect, no code compliance.</p>
+</div>
+
+<h2>Renders, video and files</h2>
+<div class="gal">
+ <figure><img src="valve_section.png" alt="Half cut-away of the valve assembly"><figcaption>Half cut-away: section faces in orange.</figcaption></figure>
+ <figure><img src="valve_exploded.png" alt="Exploded view of the valve assembly"><figcaption>Exploded view of the 11 parts plus the cartridge for reference.</figcaption></figure>
+ <figure><img src="valve_assembly.png" alt="Assembled valve with adapter ring"><figcaption>Assembled valve, adapter ring and bottle-neck reference.</figcaption></figure>
+ <figure><video src="valve_turntable.mp4" controls loop muted playsinline></video><figcaption>Turntable of the assembly.</figcaption></figure>
+ <figure><img src="valve_sheet.png" alt="Dimensioned section sheet"><figcaption>Dimensioned section sheet with bill of materials (<a href="valve_sheet.pdf">PDF</a>). Marked concept, not for manufacture.</figcaption></figure>
+</div>
+<p><a href="valve_assembly.stl" download>Download STL (assembly, mm)</a> &middot; <a href="valve_sheet.pdf">Drawing sheet PDF</a></p>
+
+<h2>Bill of materials (concept)</h2>
+<table id="bom"><tr><th>#</th><th>Part</th><th>Material</th><th>Notes / assumption</th></tr></table>
+
+<h2>What I would do next for a real CNC-ready package</h2>
+<ul class="tight">
+<li>Rebuild the parts as parametric SolidWorks or Fusion 360 models with real thread features (3/8"-24 UNF-2B port, bottle-neck thread to suit the chosen bottle).</li>
+<li>Add tolerances, surface finishes, O-ring gland dimensions to the supplier's design guide, and a drawing per part plus an assembly drawing.</li>
+<li>Run a proper stress check (FEA on the body and ring) and design the charge limiter agreed with your feasibility study.</li>
+<li>Review material and process choices with the machine shop (316L bar, brass inserts, turned and drilled; the jet and diffuser as small turned parts).</li>
+</ul>
+</main>
+<footer>Built as a self-initiated concept study in response to a public job post; not affiliated with the client. All figures here are assumptions or illustrative.</footer>
+
+<script>
+// ---- geometry (mm), same numbers as the Blender model ----
+const P = {
+ body:[[5.25,0],[24,0],[25,1],[25,34],[31,34],[31,40],[20,40],[20,52],[8,52],[8,36],[2,36],[2,34],[7,32],[7,23],[5,23],[5,19],[3,19],[3,13],[4.25,13],[4.25,1]],
+ ring:[[25.2,30],[35,30],[37,32],[37,52],[32,52],[32,34],[25.2,34]],
+ jet:[[0.5,23],[4.9,23],[4.9,19],[1.6,19],[1.6,12],[0.7,12],[0.7,19],[0.5,19]],
+ cart:[[0,-62],[9,-62],[9.5,-61],[9.5,-12],[7,-8],[4.2,-4],[4.2,13],[0,13]],
+ neck:[[28,42.2],[31.5,42.2],[31.5,66],[28,66]]
+};
+const NS='http://www.w3.org/2000/svg', sv=document.getElementById('sv');
+const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||sv).appendChild(e);return e};
+const poly=(pts,mir,a,p)=>el('polygon',Object.assign({points:pts.map(q=>(mir*q[0])+','+(-q[1])).join(' ')},a),p);
+sv.innerHTML='<defs><pattern id="h" width="1.6" height="1.6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1.6" height="1.6" fill="#2b2d36"/><line x1="0" y1="0" x2="0" y2="1.6" stroke="#4a4d5a" stroke-width=".35"/></pattern>'+
+ '<pattern id="hb" width="1.6" height="1.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><rect width="1.6" height="1.6" fill="#4a3516"/><line x1="0" y1="0" x2="0" y2="1.6" stroke="#b88a3d" stroke-width=".35"/></pattern>'+
+ '<linearGradient id="wt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d3d5c" stop-opacity=".25"/><stop offset="1" stop-color="#2d6fa5" stop-opacity=".55"/></linearGradient></defs>';
+// water + bottle neck (reference)
+const water=el('rect',{x:-28,y:-80,width:56,height:38,fill:'url(#wt)'});
+el('text',{x:0,y:-74,'text-anchor':'middle','font-size':3.2,fill:'#6aa7d6'}).textContent='water';
+[-1,1].forEach(m=>poly(P.neck,m,{fill:'#394048',stroke:'#7c8794','stroke-width':.3}));
+// static parts
+const gRing=el('g'),gBody=el('g'),gCart=el('g'),gJet=el('g'),gDyn=el('g');
+[-1,1].forEach(m=>{poly(P.ring,m,{fill:'url(#h)',stroke:'#aeb4c0','stroke-width':.35},gRing);poly(P.body,m,{fill:'url(#h)',stroke:'#aeb4c0','stroke-width':.35},gBody);poly(P.jet,m,{fill:'url(#h)',stroke:'#aeb4c0','stroke-width':.35},gJet)});
+// gasket + port O-ring (cross-sections)
+[-26,26].forEach(x=>el('circle',{cx:x,cy:-41.1,r:1.1,fill:'#000',stroke:'#777','stroke-width':.2}));
+[-3.65,3.65].forEach(x=>el('circle',{cx:x,cy:-13.5,r:.5,fill:'#000',stroke:'#777','stroke-width':.15}));
+// chamber tint (cold) drawn under dynamic bits
+const cold=el('polygon',{points:'-7,-23 7,-23 7,-32 2,-34 -2,-34 -7,-32',fill:'#5bb4e8','fill-opacity':0});
+// cartridge (moves)
+[-1,1].forEach(m=>poly(P.cart,m,{fill:'#5a5f6b',stroke:'#aeb4c0','stroke-width':.35},gCart));
+
+// check poppet, spring, diffuser, relief
+const poppet=el('circle',{cx:0,cy:-38.24,r:3,fill:'#b88a3d',stroke:'#e1b869','stroke-width':.3});
+const spr=el('polyline',{fill:'none',stroke:'#c7ccd6','stroke-width':.5});
+function drawSpring(y0,y1){const n=7,pts=[];for(let i=0;i<=n*2;i++){pts.push(((i%2?2.2:-2.2))+','+(-(y0+(y1-y0)*i/(n*2))))}spr.setAttribute('points',pts.join(' '))}
+const diff=el('rect',{x:-7.9,y:-52,width:15.8,height:2,fill:'url(#hb)',stroke:'#e1b869','stroke-width':.3});
+[-4,0,4].forEach(x=>el('rect',{x:x-.6,y:-52,width:1.2,height:2,fill:'#101116'}));
+const rBall=el('circle',{cx:-9.79,cy:-28,r:1.2,fill:'#b88a3d',stroke:'#e1b869','stroke-width':.2});
+const rSpr=el('polyline',{fill:'none',stroke:'#c7ccd6','stroke-width':.35,points:'-11,-28 -12,-27 -12.5,-29 -13.2,-27 -14,-28'});
+el('rect',{x:-25,y:-30.95,width:11,height:5.9,fill:'url(#hb)',stroke:'#e1b869','stroke-width':.3});
+// gas path (animated dashes) + bubbles
+const path=el('polyline',{points:'0,-13 0,-23 0,-30 0,-36 0,-52 0,-58',fill:'none',stroke:'#7fd0ff','stroke-width':1.1,'stroke-dasharray':'1.2 2.2','stroke-linecap':'round',opacity:0});
+const bub=[];for(let i=0;i<14;i++)bub.push(el('circle',{cx:0,cy:-60,r:.6,fill:'none',stroke:'#9ad7ff','stroke-width':.25,opacity:0}));
+const vent=el('polyline',{points:'-25,-28 -34,-28',fill:'none',stroke:'#e8665b','stroke-width':1,'stroke-dasharray':'1 1.6',opacity:0});
+// labels
+function T(x,y,s,a){el('text',{x:x,y:y,'font-size':2.9,fill:'#9a9aa3','text-anchor':a||'start'}).textContent=s}
+// ---- simulation ----
+const R=0.08314,TK=293.15,H=0.0384; // L bar /mol/K ; mol/L/bar CO2 at 20C
+const S={s:0,run:false,n_c:16/44.01,n_air:0,n_h:0,n_d:0,t:0,relief:false,hist:[],stopped:false,cart_pierced:false,Vh:0.25};
+const $=id=>document.getElementById(id);
+function reset(){S.run=false;S.stopped=false;S.n_c=16/44.01;S.n_d=0;S.t=0;S.hist=[];S.relief=false;initGas();render()}
+function initGas(){const Vw=+$('wv').value/1000;S.Vw=Vw;S.Vh=0.75-Vw;S.n_air=1.0*S.Vh/(R*TK);S.n_h=S.n_air;S.n_co2h=0}
+initGas();
+function Pc(){const g=S.n_c*44.01;return g<=0.05?0:(g>3?57:57*g/3)} // bar abs, liquid until ~3 g left
+function pb(){return (S.n_h+S.n_co2h)*R*TK/S.Vh} // bar abs
+function psi(b){return (b-1.013)*14.5038}
+function step(dt){
+ const pierced=S.s>=95; S.cart_pierced=pierced;
+ let flow=0; const pc=Pc(), p=pb();
+ if(S.run&&pierced&&S.n_c>0&&pc>p+0.5){const r=p/pc, f=r<0.55?1:Math.sqrt(Math.max(0,1-r*r))/0.835; flow=Math.min(0.026*(pc/57)*f*dt,S.n_c)}
+ if(flow>0){S.n_c-=flow;S.n_co2h+=flow}
+ // dissolve toward equilibrium (shaken)
+ const peq=(S.n_co2h+0)*R*TK/S.Vh, ptot=peq;
+ const neq=H*S.Vw*Math.max(0,pb()-1.0*0);
+ const kd=0.12; let dd=kd*(neq-S.n_d)*dt; if(dd>S.n_co2h)dd=S.n_co2h; if(dd<-S.n_d)dd=-S.n_d;
+ S.n_d+=dd;S.n_co2h-=dd;
+ // relief
+ const pg=psi(pb());
+ S.relief=pg>100; if(S.relief){const vent=Math.min(S.n_co2h,0.02*dt*(pg-95)/10);S.n_co2h-=vent}
+ // operator auto-stop
+ if(S.run&&pg>=+$('tp').value){S.run=false;S.stopped=true}
+ if(S.run&&S.n_c<=0.0005){S.run=false;S.stopped=true}
+ S.flow=flow/dt; S.t+=dt; if(S.run||S.flow>1e-6){S.hist.push([S.t,pg])} return flow>0
+}
+let last=performance.now(),dashOff=0,flowing=false;
+function render(){
+ const pg=psi(pb()), pc=Pc(), g=S.n_c*44.01;
+ const lift=S.s>=95?0:0; // cartridge screws in: neck engages at 100
+ const dz=-(100-S.s)/100*20;
+ gCart.setAttribute('transform','translate(0,'+(-dz)+')');
+ $('lblS').textContent=Math.round(S.s)+'%';
+ $('oP').textContent=Math.max(0,pg).toFixed(0)+' psi'; $('oP').className=pg>100?'st-bad':(pg>=60&&pg<=90?'st-ok':'');
+ $('oC').textContent=S.s>=95&&g>0.05?(pc*14.5038-14.7).toFixed(0)+' psi':'–';
+ $('oG').textContent=g.toFixed(1)+' g';
+ const ck=flowing&&S.run?'open':'closed'; $('oK').textContent=ck; $('oK').className=ck==='open'?'st-ok':'';
+ $('oR').textContent=S.relief?'OPEN, venting':'closed'; $('oR').className=S.relief?'st-bad':'';
+ $('oV').textContent=(S.n_d*24.0/Math.max(0.05,S.Vw)).toFixed(1);
+ const dP=Math.max(0,pc-pb()), tch=flowing?Math.max(-35,20-0.75*dP):20; $('oT').textContent=Math.round(tch)+' °C'; cold.setAttribute('fill-opacity',Math.max(0,Math.min(.8,(20-tch)/60)));
+ // wall margin at current chamber pressure (upstream side uses cartridge pressure when flowing)
+ const pUse=flowing?pc:pb(); $('oSF').textContent=sf(pUse,7,25,170).toFixed(0)+'x';
+ poppet.setAttribute('cy',-(38.24+(flowing?1.6:0))); drawSpring(41.3+(flowing?1.6:0),50);
+ rBall.setAttribute('cx',S.relief?-11.4:-9.79);
+ path.setAttribute('opacity',flowing?.95:0); vent.setAttribute('opacity',S.relief?1:0);
+ water.setAttribute('height',38+0);
+ chart();
+}
+function sf(pbar,ri,ro,y){const s=(pbar*0.1)*(ro*ro+ri*ri)/(ro*ro-ri*ri);return y/Math.max(s,1e-6)}
+function chart(){const c=$('ch'),x=c.getContext('2d'),W=c.width,Hh=c.height;x.clearRect(0,0,W,Hh);
+ const ymax=140,yy=v=>Hh-6-(v/ymax)*(Hh-14);
+ x.fillStyle='rgba(108,197,139,.12)';x.fillRect(0,yy(90),W,yy(60)-yy(90));
+ x.strokeStyle='#e8665b';x.setLineDash([6,5]);x.beginPath();x.moveTo(0,yy(100));x.lineTo(W,yy(100));x.stroke();x.setLineDash([]);
+ x.fillStyle='#9a9aa3';x.font='16px sans-serif';x.fillText('psi',4,16);
+ const h=S.hist;if(h.length<2)return;const tmax=Math.max(8,h[h.length-1][0]);
+ x.strokeStyle='#d9a35b';x.lineWidth=2.5;x.beginPath();h.forEach((p,i)=>{const X=p[0]/tmax*W,Y=yy(Math.max(0,p[1]));i?x.lineTo(X,Y):x.moveTo(X,Y)});x.stroke();x.lineWidth=1}
+function loop(now){const dt=Math.min(0.1,(now-last)/1000);last=now;
+ const N=4;let f=false;for(let i=0;i<N;i++){if(step(dt/N*0.6))f=true}
+ flowing=f&&S.run; 
+ dashOff-=dt*40; path.setAttribute('stroke-dashoffset',dashOff);
+ bub.forEach((b,i)=>{ if(flowing){const ph=((now/1000*0.9+i/bub.length)%1);b.setAttribute('cy',-52-ph*26);b.setAttribute('cx',Math.sin(i*2.3+now/700)*(5+ph*10));b.setAttribute('opacity',(1-ph)*.9)} else b.setAttribute('opacity',0)});
+ render();requestAnimationFrame(loop)}
+$('sl').oninput=e=>{S.s=+e.target.value;render()};
+$('wv').oninput=e=>{$('lblW').textContent=e.target.value;if(!S.run&&S.n_c>=16/44.01-1e-6)initGas()};
+$('tp').oninput=e=>{$('lblT').textContent=e.target.value};
+$('bGo').onclick=()=>{ if(S.s<95){$('oK').textContent='screw cartridge in first';return} if(S.n_c<=0.0005)return; S.run=true;S.stopped=false};
+$('bStop').onclick=()=>{S.run=false;S.stopped=true};
+$('bReset').onclick=()=>{$('sl').value=0;S.s=0;reset()};
+// ---- hand calc ----
+function calc(){const p=+$('cP').value,ri=+$('cRi').value,ro=+$('cRo').value,y=+$('cY').value;
+ const s=(p*0.1)*(ro*ro+ri*ri)/(ro*ro-ri*ri);
+ $('cOut').innerHTML='Bore hoop stress &asymp; <b>'+s.toFixed(1)+' MPa</b>; margin to yield = <b>'+(y/s).toFixed(1)+'&times;</b> (brief asks for 3&ndash;4&times; burst resistance, which is an ultimate-strength check I have not done).'}
+['cP','cRi','cRo','cY'].forEach(i=>$(i).oninput=calc);calc();
+// ---- BOM ----
+const BOM=[['01','Valve body','316L stainless','OD 50 / flange 62 / height 52 mm; port 3/8"-24 UNF with 8.5 mm pilot and 45&deg; chamfer'],['02','Adapter ring','316L stainless','Bottle-neck thread TBC; lip clamps body flange'],['03','Pierce jet','316L stainless','Hollow pin 0.7 mm bore, 1.0 mm orifice; press fit (assumed)'],['04','Check poppet','Brass ball, &Oslash;6','Seats on 4 mm edge; spring rate not calculated'],['05','Check spring','316 spring wire','Assumed, not sized'],['06','Diffuser','316L stainless','9 &times; &Oslash;1.2 holes; retained by press fit / staking (assumed)'],['07','Port O-ring','FKM','Face seal on cartridge neck; groove to supplier guide TBC'],['08','Flange face seal','FKM','Between flange and bottle rim'],['09','Relief ball','Brass','&Oslash;2.4'],['10','Relief spring','316 spring wire','Set for roughly 100 psi: not sized'],['11','Relief plug','Brass','Threaded plug, thread TBC'],['ref','16 g CO<sub>2</sub> cartridge','Steel','Reference only, dimensions approximate']];
+const tb=$('bom');BOM.forEach(r=>{const tr=document.createElement('tr');tr.innerHTML='<td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td>';tb.appendChild(tr)});
+reset();
+if(location.search.includes('auto')){$('sl').value=100;S.s=100;$('tp').value=+(new URLSearchParams(location.search).get('stop')||75);$('lblT').textContent=$('tp').value;S.run=true}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
