@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Long-Stem Rose Lighter: interactive concept study | 3D Concept Portfolio</title>
+<meta name="description" content="Interactive 360 concept study of a luxury long-stem rose lighter: hinged rose bud, sculpted leaves and thorns, gold or green colourways, mechanism layout, exploded view, STL and concept sheet. Self-initiated concept, not safety-validated.">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+:root{--bg:#0e0f12;--panel:#17181d;--line:#2a2c34;--tx:#e9e7e2;--mut:#9a9aa3;--acc:#d9a35b;--red:#d8505a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 -apple-system,Segoe UI,Helvetica,Arial,sans-serif}
+a{color:var(--acc)}header,main,footer{max-width:1100px;margin:0 auto;padding:0 20px}
+header{padding-top:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+h1{font:800 28px/1.2 Georgia,serif;margin:18px 0 6px}h2{font:700 20px Georgia,serif;margin:34px 0 10px}
+.sub{color:var(--mut);max-width:800px}
+.warn{background:#2a2113;border:1px solid #6b5426;color:#f0d9a8;border-radius:10px;padding:12px 14px;margin:16px 0;font-size:14px}
+.grid{display:grid;grid-template-columns:minmax(300px,1fr) 360px;gap:18px;align-items:start}@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+#view{width:100%;aspect-ratio:1/1;background:#050506;border-radius:10px;display:block;cursor:grab;user-select:none;-webkit-user-drag:none;touch-action:pan-y}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
+button{background:#23252d;color:var(--tx);border:1px solid #3a3d48;border-radius:8px;padding:9px 12px;font:600 14px inherit;cursor:pointer}
+button.on{background:var(--acc);color:#1b1408;border-color:var(--acc)}
+.hint{font-size:12px;color:var(--mut);margin-top:8px}
+ol.steps{padding-left:18px;margin:8px 0}ol.steps li{margin:8px 0}
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}.gal img{width:100%;border-radius:10px;border:1px solid var(--line)}
+.gal figcaption{font-size:13px;color:var(--mut);margin-top:6px}figure{margin:0}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}th{color:var(--mut);font-weight:600}
+ul.tight li{margin:5px 0}.tag{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:2px 10px;font-size:12px;color:var(--mut)}
+footer{padding:30px 20px 50px;color:var(--mut);font-size:13px}
+</style>
+</head>
+<body>
+<header><a href="/">&larr; 3D Concept Portfolio</a><span class="tag">Self-initiated concept study</span></header>
+<main>
+<h1>Long-Stem Rose Lighter: interactive concept study</h1>
+<p class="sub">A luxury collectible rose lighter: realistic metallic red bud on a hinge, long slender stem, sculpted leaves, thorn details and gold or green accents. Turn it, flip the bud open, light it, switch colourway, then see the mechanism layout, exploded view and a concept sheet.</p>
+<div class="warn"><b>Please read:</b> this is a concept study I built on my own from the public job post, <b>before</b> seeing your concept images, so it will not match them. It is a Blender sculpt with pre-rendered views, not parametric CAD, and <b>not a safety-validated lighter</b>. It does not design a gas system: fuel, valve and ignition would use a certified off-the-shelf module, and any real lighter needs safety and child-resistance testing before sale. All dimensions are approximate.</div>
+
+<div class="grid">
+ <div class="card">
+  <img id="view" alt="Rose lighter, drag to rotate" draggable="false">
+  <div class="row" id="stateBtns"><button data-s="closed" class="on">Closed</button><button data-s="open">Bud open</button><button data-s="lit">Lit</button></div>
+  <div class="row" id="colBtns"><button data-c="green" class="on">Red + green &amp; gold</button><button data-c="gold">Red + all gold</button><button id="spin">Auto-spin: on</button></div>
+  <div class="hint" id="hint">Drag left and right (or swipe) to rotate 360&deg;. Lit view is shown in the green colourway only.</div>
+ </div>
+ <div class="card">
+  <b>How the concept works</b>
+  <ol class="steps">
+   <li><b>Lift the rose.</b> The red bud is a hinged head. It swings off the centre line to reveal the gold receptacle, burner nozzle and thumb wheel.</li>
+   <li><b>Press the gold thorn.</b> One thorn on the upper stem is the ignition button. It drives a piezo igniter module and opens the gas valve (concept).</li>
+   <li><b>Light.</b> Gas from the fuel tank in the stem reaches the nozzle and the spark lights it.</li>
+   <li><b>Close.</b> Lower the bud, the flame goes out, and the rose sits closed like a collectible.</li>
+   <li><b>Refill.</b> A refill valve in the gold base cap, subject to engineering and safety feasibility.</li>
+  </ol>
+  <div class="hint">The valve, jet and igniter would be certified off-the-shelf modules chosen with a manufacturer. I would design the housing, hinge, button and finish around them.</div>
+ </div>
+</div>
+
+<h2>Exploded view and stills</h2>
+<div class="gal">
+ <figure><img src="rose_exploded.jpg" alt="Exploded view"><figcaption>Exploded: head, nozzle and wheel, receptacle, sepals, piezo, valve, fuel tank (offset), stem with collars, thorns and leaves, base cap.</figcaption></figure>
+ <figure><img src="hero_closed_green.jpg" alt="Closed rose"><figcaption>Closed, red lacquered metal bud with green stem and gold trim.</figcaption></figure>
+ <figure><img src="hero_open_green.jpg" alt="Bud open"><figcaption>Bud flipped open on its hinge.</figcaption></figure>
+ <figure><img src="hero_lit_green.jpg" alt="Lit"><figcaption>Lit (illustrative flame).</figcaption></figure>
+ <figure><img src="hero_closed_gold.jpg" alt="All gold colourway"><figcaption>Alternative colourway: red bud with all-gold stem and leaves.</figcaption></figure>
+ <figure><img src="rose_sheet.png" alt="Concept sheet"><figcaption>Concept layout sheet (<a href="rose_sheet.pdf">PDF</a>). Marked concept, not for manufacture.</figcaption></figure>
+</div>
+<p><a href="rose_lighter_concept.stl" download>Download STL (concept model, mm)</a> &middot; <a href="rose_sheet.pdf">Concept sheet PDF</a></p>
+
+<h2>Design intent</h2>
+<table>
+<tr><th>Element</th><th>Concept</th></tr>
+<tr><td>Bud</td><td>Five layers of hand-sculpted petals (about 20) in red lacquered metal, scalloped edges, rolled outer petals. Target process to be agreed: lost-wax cast brass or zinc, or formed sheet, then plated and lacquered.</td></tr>
+<tr><td>Stem</td><td>About 132 mm slender tube (&Oslash;9 to 8), brass or stainless, with three gold collars, doubling as the fuel reservoir bore.</td></tr>
+<tr><td>Leaves and thorns</td><td>Three sculpted leaves with a folded centre vein and fine serration; a dozen small thorns, one of them the ignition button.</td></tr>
+<tr><td>Finish</td><td>Gold plating accents; red lacquer or enamel; green enamel for the stem and leaves (or all gold as an alternative colourway).</td></tr>
+<tr><td>Presentation</td><td>Shown on a black display stand; a retail gift tube or box would be designed in refinement.</td></tr>
+<tr><td>Overall size</td><td>About 203 mm tall including bud (assumed; to be set from your brief and ergonomics).</td></tr>
+</table>
+
+<h2>Safety and feasibility (what I would flag early)</h2>
+<ul class="tight">
+<li>Refillable butane lighters are regulated products. Safety standards such as ISO 9994 and child-resistance requirements differ by market (for example in the US, EU and UK) and need testing by an accredited lab. I do not know your target markets yet.</li>
+<li>A 9 mm stem is tight for a tank, valve and igniter. Fuel volume, burn time and refill method need a quick feasibility check with a lighter-mechanism supplier before design is frozen.</li>
+<li>A long thin lighter changes how it is held and lit. Ergonomics and flame position relative to the petals need a physical test, not only CAD.</li>
+<li>The hinged bud must keep petals clear of the flame. I would check distances once the nozzle module is chosen.</li>
+</ul>
+
+<h2>What I would deliver, step by step</h2>
+<ul class="tight">
+<li><b>Refinement:</b> match your concept images, then 3D model options and colourways with renders.</li>
+<li><b>Validation first:</b> a feasibility note with the supplier modules, internal layout and risks, before any manufacturing drawings.</li>
+<li><b>Files after validation:</b> parametric 3D CAD of every part and the assembly (STEP and native), 2D manufacturing drawings (PDF/DXF) with tolerances and finishes, bill of materials, and STL for prototypes.</li>
+<li><b>Ownership:</b> I am happy to sign a written agreement giving you full commercial ownership of the final design and source files.</li>
+</ul>
+</main>
+<footer>Built as a self-initiated concept study in response to a public job post; not affiliated with the client or the Flame brand. All figures and views here are concept or illustrative.</footer>
+<script>
+const FR=18, img=document.getElementById('view');
+let state='closed', col='green', idx=0, spin=true, dragging=false, sx=0, si=0;
+const cache={};
+function path(i){return 'frames/f_'+state+'_'+col+'_'+String(((i%FR)+FR)%FR).padStart(2,'0')+'.jpg'}
+function show(i){idx=((i%FR)+FR)%FR;img.src=path(idx)}
+function preload(){for(let i=0;i<FR;i++){const p=path(i);if(!cache[p]){const im=new Image();im.src=p;cache[p]=im}}}
+function setState(s){state=s;if(s==='lit'&&col==='gold'){col='green';mark()}mark();preload();show(idx)}
+function setCol(c){col=c;if(c==='gold'&&state==='lit'){state='open'}mark();preload();show(idx)}
+function mark(){document.querySelectorAll('#stateBtns button').forEach(b=>b.classList.toggle('on',b.dataset.s===state));document.querySelectorAll('#colBtns button[data-c]').forEach(b=>b.classList.toggle('on',b.dataset.c===col));
+ document.getElementById('hint').textContent=(col==='gold'?'Lit view is only shown in the green colourway, so "Lit" switches back to it. ':'')+'Drag left and right (or swipe) to rotate 360 degrees.'}
+document.querySelectorAll('#stateBtns button').forEach(b=>b.onclick=()=>setState(b.dataset.s));
+document.querySelectorAll('#colBtns button[data-c]').forEach(b=>b.onclick=()=>setCol(b.dataset.c));
+document.getElementById('spin').onclick=e=>{spin=!spin;e.target.textContent='Auto-spin: '+(spin?'on':'off')};
+img.addEventListener('pointerdown',e=>{dragging=true;sx=e.clientX;si=idx;spin=false;document.getElementById('spin').textContent='Auto-spin: off';img.setPointerCapture(e.pointerId);img.style.cursor='grabbing'});
+img.addEventListener('pointermove',e=>{if(!dragging)return;const d=Math.round((e.clientX-sx)/(img.clientWidth/FR*1.4));show(si-d)});
+img.addEventListener('pointerup',()=>{dragging=false;img.style.cursor='grab'});
+setInterval(()=>{if(spin&&!dragging)show(idx+1)},140);
+preload();show(0);mark();
+</script>
+</body>
+</html>
