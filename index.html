@@ -171,6 +171,10 @@ dialog::backdrop { background: rgba(0,0,0,.7); backdrop-filter: blur(4px); }
   .reveal { opacity: 1; transform: none; }
 }
 </style>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body>
 <a class="skip" href="#work">Skip to work</a>
@@ -312,6 +316,7 @@ dialog::backdrop { background: rgba(0,0,0,.7); backdrop-filter: blur(4px); }
     <h3 class="display" id="mTitle"></h3>
     <div class="cat" id="mCat"></div>
     <p id="mDesc"></p>
+    <p><a id="mLink" class="pill fill" href="#" style="display:none" target="_blank" rel="noopener"></a></p>
   </div>
 </dialog>
 
@@ -348,6 +353,7 @@ const PROJECTS = [
   { title: 'Cable and Charger Organiser: 3D Printing Concept and STL', category: '3D Printing', images: ['cable.png'], description: 'A weighted desk block with three open channels that hold charging cables in place. Designed for FDM printing. Concept model, not print-tested.' },
   { title: 'Product Packshot Reel: Lamp, Speaker and Pour-Over Studio Renders and Turntables', category: 'Rendering', images: ['packshot_speaker.png', 'packshot_pourover.png'], description: 'Studio packshots of three of the product concepts: two turntables and four close-up stills in a dark studio set. The reel video plays at the top of this page.' },
   { title: 'Timber Cabin Day to Dusk: Exterior 3D Renders', category: 'Rendering', images: ['cabin_dusk.png', 'cabin_day.png'], description: 'The same cabin concept rendered in daylight and at dusk with warm interior light. Self-initiated concept, not for construction.' },
+  { title: 'Portable CO2 Carbonation Valve and Adapter Ring: Interactive Concept Demo, Section Drawing and STL', category: 'Product Design', images: ['valve_section.png', 'valve_exploded.png'], description: 'A self-initiated concept study of a bottom-mounted CO2 injection valve (3/8"-24 UNF cartridge port, pierce pin, metering orifice, expansion chamber, check valve, relief) and a threaded adapter ring for a wide-mouth bottle. The live demo has an operable section view with a simplified dose simulation, a dimensioned section sheet, exploded view, turntable and STL. Concept only: Blender geometry, not parametric CAD, no FEA, not pressure-tested.', link: 'demos/co2-valve/', linkText: 'Open the live demo \u2192' },
 ];
 /* =================================== */
 
@@ -436,6 +442,8 @@ function openModal(i) {
   document.getElementById('mTitle').textContent = p.title;
   document.getElementById('mCat').textContent = p.category;
   document.getElementById('mDesc').textContent = p.description;
+  const ml = document.getElementById('mLink');
+  if (p.link) { ml.href = p.link; ml.textContent = p.linkText || 'Open'; ml.style.display = ''; } else { ml.style.display = 'none'; }
   if (typeof modal.showModal === 'function') modal.showModal(); else modal.setAttribute('open', '');
 }
 document.getElementById('mClose').addEventListener('click', () => modal.close());
